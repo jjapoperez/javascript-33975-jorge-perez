@@ -30,7 +30,7 @@ let montor = (montoant,cuotaact) => montoant-cuotaact
 
 //Cálculos y resultados
     //datos iniciales
-    let monto0 = monto
+    //let monto0 = monto
     let interesperiodo = 0
     let valoramortizado = 0
     let cuotaactual = 0
@@ -43,8 +43,8 @@ let montor = (montoant,cuotaact) => montoant-cuotaact
         //const element = array[i];
         interesperiodo = interesper(monto0,interes)
         cuotaactual = valoramortizado + interesperiodo
-        monto0 = monto0 - valoramortizado
+        monto = monto - valoramortizado
         //console.log("Periodo\tIntereses\tAmortización\tCuota\tRestante\n"+
-        console.log(i+"\t"+interesperiodo+"\t"+valoramortizado+"\t"+cuotaactual+"\t"+monto0);
+        console.log(i+"\t"+interesperiodo+"\t"+valoramortizado+"\t"+cuotaactual+"\t"+monto);
         
     }
