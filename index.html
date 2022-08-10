@@ -25,6 +25,28 @@
     <h4>Proximamente...</h4>
     <h4>La tabla de amortizaciones completa</h4>
     <p>Nota: ¡Si no tienes valores para hacer tu propia simulación, deja los cuadros vacios y podrás ver el resultado con el ejemplo anterior!</p>
+    <div>
+        <form class = "formulario" action="">
+            <fieldset>
+                <legend>Aquí podrás ingresar tu información a simular</legend>
+                <div>
+                    <label>Monto</label>
+                    <input type="number" value="12000000" id="monto">
+                </div>
+                <div>
+                    <label>Intereses</label>
+                    <input type="number" value="0.02" id="int">
+                </div>
+                <div>
+                    <label>Periodos</label>
+                    <input type="number" value="12" id="per">
+                </div>
+            </fieldset>
+            <div>
+                <input type="button" onclick="ingresoDatos()" value="Simular" id="capturador">
+            </div>
+        </form>
+    </div>
     <script src="js/code.js"></script>
     
 </body>
