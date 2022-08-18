@@ -1,6 +1,10 @@
 //Script para calcular amortizaciones
 
-function ingresoDatos(){
+//para esta entrega haré el evento con todo el código
+//para la entrega 2 ya lo haré modular y el onclick solo va a tener los llamados de las funciones para ejecutar todo
+
+let subBot = document.getElementById("capturador")
+subBot.onclick= () =>{
     //Recolectar datos desde formulario
     let montosim = document.getElementById("monto").value
     let interessim = document.getElementById("int").value
@@ -32,38 +36,82 @@ let valamort = (val,per) => val/per
 //Cálculos y resultados
     //datos iniciales
     let monto0 = simu.monto
-    let interesperiodo = 0
-    let valoramortizado = 0
-    let cuotaactual = 0
-    let interesestotales = []
+    let interesPeriodo = 0
+    let valorAmortizado = 0
+    let cuotaActual = 0
+    let interesesTotales = []
     let simulacionhtml = []
     //let per = 0
     //alert("<p>Datos iniciales \nMonto inicial: "+simu.monto+"\nTasa de interés: "+simu.interes+"\nCantidad de periodos: "+simu.periodo+"</p>");
-    simulacionhtml.push("<p>Periodo\tIntereses\tAmortización\tCuota\tRestante</p>")
-    simulacionhtml.push("<p>"+0+"\t"+interesperiodo+"\t"+valoramortizado+"\t"+cuotaactual+"\t"+simu.monto+"</p>")
-    valoramortizado = valamort(simu.monto,simu.periodo)
+    //simulacionhtml.push("<p>Periodo\tIntereses\tAmortización\tCuota\tRestante</p>")
+    //simulacionhtml.push("<p>"+0+"\t"+interesperiodo+"\t"+valoramortizado+"\t"+cuotaactual+"\t"+simu.monto+"</p>")
+    valorAmortizado = valamort(simu.monto,simu.periodo)
     for (let i = 1; i <= simu.periodo; i++) {
         //const element = array[i];
-        interesperiodo = interesper(monto0,simu.interes)
-        cuotaactual = valoramortizado + interesperiodo
-        monto0 = monto0 - valoramortizado
-        interesestotales.push(interesperiodo)
-        simulacionhtml.push("<p>"+i+"\t"+interesperiodo+"\t"+valoramortizado+"\t"+cuotaactual+"\t"+monto0+"</p>");
+        interesPeriodo = interesper(monto0,simu.interes)
+        cuotaActual = valorAmortizado + interesPeriodo
+        monto0 = monto0 - valorAmortizado
+        interesesTotales.push(interesPeriodo)
+        simulacionhtml.push({itera: i, ip: interesPeriodo, va:valorAmortizado, ca:cuotaActual, m:monto0});
+        //simulacionhtml.push("<p>"+i+"\t"+interesperiodo+"\t"+valoramortizado+"\t"+cuotaactual+"\t"+monto0+"</p>");
         //console.log("Periodo\tIntereses\tAmortización\tCuota\tRestante\n"+
         //console.log(i+"\t"+interesperiodo+"\t"+valoramortizado+"\t"+cuotaactual+"\t"+monto0);
         
     }
 
-    let simutext = document.createElement("div")
-    simutext.className = "tablasimu"
-    simutext.innerHTML = simulacionhtml.join("\n")
-    //alert(simulacionhtml.join("\n"));
-    document.body.appendChild(simutext);
+    // let simutext = document.createElement("div")
+    // simutext.className = "tablasimu"
+    // simutext.innerHTML = simulacionhtml.join("\n")
+    // //alert(simulacionhtml.join("\n"));
+    // document.body.appendChild(simutext);
 
-    let inttotales = document.createElement("div")
-    inttotales.innerHTML = "Se va a pagar en intereses: "+interesestotales.reduce((partialsum, a) => partialsum + a, 0)
-    document.body.appendChild(inttotales);
+    
 
-    //console.log("Se va a pagar en intereses: "+interesestotales.reduce((partialsum, a) => partialsum + a, 0))
+    //prueba para el anexo de tabla bonita
+    
+    let val = document.getElementById("tablaAmortizacion")
+
+    if (val==null){
+        let inttotales = document.createElement("div")
+        inttotales.innerHTML = "Se va a pagar en intereses: "+interesesTotales.reduce((partialsum, a) => partialsum + a, 0)
+        document.body.appendChild(inttotales);
+        let tabla = document.createElement("table")
+        tabla.setAttribute("id","tablaAmortizacion")
+        tabla.className='fl-table'
+        let teca = document.createElement("thead")
+        teca.innerHTML = "<tr><td>Periodo</td><td>Intereses</td><td>Amortización</td><td>CuotaRestante</td></tr>"
+        tabla.appendChild(teca)
+        let tbody = document.createElement("tbody")
+        
+        //alert(Object.values(filastr))
+        for (it in simulacionhtml){
+            let linea = document.createElement("tr")
+            let texto = document.createElement("td")
+            let valortdi = document.createTextNode(it)
+            //alert(it)
+            //alert(simulacionhtml[valores])
+            //alert(it.itera)
+            texto.appendChild(valortdi)
+            linea.appendChild(texto)
+            //alert(typeof Object.values(simulacionhtml[it]))
+            let vec = Object.values(Object.values(simulacionhtml[it]))
+            //alert(vec)
+            for (const valor of vec){
+                //alert(Object.values(simulacionhtml[it]));
+                //let filastr = Object.values(simulacionhtml[0])
+                //alert("valor"+valor)
+                let textotd = document.createElement("td")
+                let valortd = document.createTextNode(valor)
+                textotd.appendChild(valortd)
+                //alert("texto"+textotd.innerHTML)
+                linea.appendChild(texto)
+                //alert("linea"+linea.innerHTML);
+            }
+            tbody.appendChild(linea);
+        }
+        tabla.appendChild(tbody)
+        document.body.appendChild(tabla);
+    }
+    
 
 };
