@@ -65,7 +65,11 @@ let valamort = (val,per) => val/per
     // //alert(simulacionhtml.join("\n"));
     // document.body.appendChild(simutext);
 
-    
+    let formatoPesos = new Intl.NumberFormat('en-US',{
+        style:'currency',
+        currency: 'USD',
+        maximumFractionDigits: 0
+    })
 
     //prueba para el anexo de tabla bonita
     
@@ -73,39 +77,32 @@ let valamort = (val,per) => val/per
 
     if (val==null){
         let inttotales = document.createElement("div")
-        inttotales.innerHTML = "Se va a pagar en intereses: "+interesesTotales.reduce((partialsum, a) => partialsum + a, 0)
+        inttotales.innerHTML = "Se va a pagar en intereses: "+formatoPesos.format(interesesTotales.reduce((partialsum, a) => partialsum + a, 0))
         document.body.appendChild(inttotales);
+
         let tabla = document.createElement("table")
         tabla.setAttribute("id","tablaAmortizacion")
         tabla.className='fl-table'
         let teca = document.createElement("thead")
-        teca.innerHTML = "<tr><td>Periodo</td><td>Intereses</td><td>Amortización</td><td>CuotaRestante</td></tr>"
+        teca.innerHTML = "<tr><td>Periodo</td><td>Intereses</td><td>Amortización</td><td>Cuota Período</td><td>CuotaRestante</td></tr>"
         tabla.appendChild(teca)
         let tbody = document.createElement("tbody")
         
         //alert(Object.values(filastr))
-        for (it in simulacionhtml){
+        for (let it of simulacionhtml){
             let linea = document.createElement("tr")
-            let texto = document.createElement("td")
-            let valortdi = document.createTextNode(it)
-            //alert(it)
-            //alert(simulacionhtml[valores])
-            //alert(it.itera)
-            texto.appendChild(valortdi)
-            linea.appendChild(texto)
-            //alert(typeof Object.values(simulacionhtml[it]))
-            let vec = Object.values(Object.values(simulacionhtml[it]))
-            //alert(vec)
-            for (const valor of vec){
+            let vec = Object.values(it)
+            // alert(vec)
+            for (let valor of vec){
                 //alert(Object.values(simulacionhtml[it]));
                 //let filastr = Object.values(simulacionhtml[0])
-                //alert("valor"+valor)
+                // alert("valor"+valor)
                 let textotd = document.createElement("td")
                 let valortd = document.createTextNode(valor)
                 textotd.appendChild(valortd)
-                //alert("texto"+textotd.innerHTML)
-                linea.appendChild(texto)
-                //alert("linea"+linea.innerHTML);
+                // alert("texto"+textotd.innerHTML)
+                linea.appendChild(textotd)
+                // alert("linea"+linea.innerHTML);
             }
             tbody.appendChild(linea);
         }
